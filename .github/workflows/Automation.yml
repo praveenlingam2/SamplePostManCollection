@@ -1,0 +1,29 @@
+name: Postman Collection Run
+
+on: workflow_dispatch
+
+jobs:
+  postman:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create dir
+        run: |
+          mkdir TestArtifacts
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Install Node.js
+        uses: actions/checkout@v3
+        with:
+          node-version: '12.x'
+      - name: Install Newman
+        run: |
+         npm install -g newman
+         npm install -g newman-reporter-slackreporter
+         npm install -g newman-reporter-htmlextra
+      - name: Run Postman Collection
+        run: newman run "sample_collection01.postman_collection.json" -e "sample_collection_2.postman_collection.json" -r cli,htmlextra --reporter-htmlextra-export testArtifacts/htmlreport.html
+      - name: Output the results
+        uses: actions/checkout@v3
+        with:
+         name: Reports
+         path: testArtifacts
