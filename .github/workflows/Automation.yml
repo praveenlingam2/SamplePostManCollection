@@ -23,7 +23,7 @@ jobs:
       - name: Run Postman Collection
         run: newman run "sample_collection01.postman_collection.json" -e "sample_collection_2.postman_collection.json" -r cli,htmlextra --reporter-htmlextra-export testArtifacts/htmlreport.html
       - name: Output the results
-        uses: actions/checkout@v3
+        uses: actions/upload-artifacts@v3
         with:
          name: Reports
          path: testArtifacts
